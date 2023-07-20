@@ -4,7 +4,9 @@ import com.studentmanagement.dto.StudentDTO;
 import com.studentmanagement.exception.Exception404;
 import com.studentmanagement.filecsv.Helper;
 import com.studentmanagement.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -53,7 +55,7 @@ public class StudentAPI {
     }
 
     @PostMapping("/student")
-    private String createStudent(@RequestBody StudentDTO dto) {
+    private String createStudent(@RequestBody @Valid StudentDTO dto) {
 
         return studentService.save(dto);
     }
@@ -76,7 +78,7 @@ public class StudentAPI {
     }
 
     @PutMapping("/student/{id}")
-    private String updateStudent(@RequestBody StudentDTO dto, @PathVariable("id") Long id) {
+    private String updateStudent(@RequestBody @Valid StudentDTO dto, @PathVariable("id") Long id) {
         dto.setId(id);
         return studentService.save(dto);
     }

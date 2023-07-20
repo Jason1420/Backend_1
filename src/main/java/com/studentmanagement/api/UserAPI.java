@@ -5,6 +5,7 @@ import com.studentmanagement.dto.security.LoginDTO;
 import com.studentmanagement.dto.security.UserDTO;
 import com.studentmanagement.jwt.JwtGenerator;
 import com.studentmanagement.service.AccountService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,12 +26,12 @@ public class UserAPI {
     private JwtGenerator jwtGenerator;
 
     @PostMapping("/signup")
-    public String signUpUser(@RequestBody UserDTO userDTO) {
+    public String signUpUser(@RequestBody @Valid UserDTO userDTO) {
         return accountService.addNewUser(userDTO);
     }
 
     @PostMapping("/user/{id}")
-    public String updateUser(@RequestBody UserDTO userDTO, @PathVariable("id") Long id) {
+    public String updateUser(@RequestBody @Valid UserDTO userDTO, @PathVariable("id") Long id) {
         userDTO.setId(id);
         return accountService.addNewUser(userDTO);
     }

@@ -1,5 +1,6 @@
 package com.studentmanagement.entity;
 
+import com.studentmanagement.dto.Gender;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -19,7 +20,7 @@ public class StudentEntity {
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
     @Column(name = "gender", length = 6)
-    private String gender;
+    private Gender gender;
     @Column(name = "email")
     private String email;
     @Column(name = "phone_number", length = 11)
@@ -61,11 +62,11 @@ public class StudentEntity {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 

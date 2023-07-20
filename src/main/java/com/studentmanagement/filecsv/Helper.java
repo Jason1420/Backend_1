@@ -1,5 +1,6 @@
 package com.studentmanagement.filecsv;
 
+import com.studentmanagement.dto.Gender;
 import com.studentmanagement.entity.StudentEntity;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -85,7 +86,7 @@ public class Helper {
                             s.setLastName(cell.getStringCellValue());
                             break;
                         case 4:
-                            s.setGender(cell.getStringCellValue());
+                            s.setGender(Gender.valueOf(cell.getStringCellValue()));
                             break;
                         case 5:
                           s.setDateOfBirth(cell.getDateCellValue());
@@ -142,7 +143,7 @@ public class Helper {
                 dataRow.createCell(1).setCellValue(student.getCode());
                 dataRow.createCell(2).setCellValue(student.getFirstName());
                 dataRow.createCell(3).setCellValue(student.getLastName());
-                dataRow.createCell(4).setCellValue(student.getGender());
+                dataRow.createCell(4).setCellValue(student.getGender().toString());
                 dataRow.createCell(5).setCellValue(student.getDateOfBirth());
                 dataRow.createCell(6).setCellValue(student.getDepartment());
                 dataRow.createCell(7).setCellValue(student.getPhoneNumber().toString());
