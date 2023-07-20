@@ -58,7 +58,7 @@ public class AccountServiceImpl implements AccountService {
             UserEntity newEntity = userConverter.toEntity(dto, oldEntity);
             newEntity.setPassword(passwordEncoder.encode(newEntity.getPassword()));
             userRepository.save(newEntity);
-            return "Successfully update user with id: " +newEntity.getId();
+            return "Successfully updated user with id: " +newEntity.getId();
         }
         UserEntity newEntity = userConverter.toEntity(dto);
         newEntity.setPassword(passwordEncoder.encode(newEntity.getPassword()));
@@ -67,7 +67,7 @@ public class AccountServiceImpl implements AccountService {
         listEntity.add(roleUser);
         newEntity.setRoles(listEntity);
         userRepository.save(newEntity);
-        return "Successfully create an user with id :" + newEntity.getId();
+        return "Successfully created an user with id :" + newEntity.getId();
     }
 
     @Override
@@ -104,7 +104,7 @@ public class AccountServiceImpl implements AccountService {
         UserEntity entity = userRepository.findOneById(id);
         entity.setRoles(roles);
         userRepository.save(entity);
-        return "successfully update role";
+        return "successfully updated role";
     }
 
     @Override
@@ -112,7 +112,7 @@ public class AccountServiceImpl implements AccountService {
         for(Long id:ids){
             userRepository.deleteById(id);
         }
-        return "Successfully delete user";
+        return "Successfully deleted user";
     }
 
     @Override
