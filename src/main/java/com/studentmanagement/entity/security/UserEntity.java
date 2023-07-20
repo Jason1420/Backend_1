@@ -21,14 +21,6 @@ public class UserEntity {
     private String password;
     private String email;
 
-    public List<RoleEntity> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<RoleEntity> roles) {
-        this.roles = roles;
-    }
-
     @ManyToMany(fetch = FetchType.EAGER)
     List<RoleEntity> roles;
 
