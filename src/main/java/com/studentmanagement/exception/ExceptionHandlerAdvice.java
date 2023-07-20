@@ -38,7 +38,7 @@ public class ExceptionHandlerAdvice {
     public ErrorResponse handlerException409(Exception409 ex, WebRequest req){
         return new ErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
-//
+
     @ExceptionHandler({UsernameNotFoundException.class, BadCredentialsException.class})
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ErrorResponse handleAuthenticationException(Exception ex) {
@@ -56,16 +56,10 @@ public class ExceptionHandlerAdvice {
     }
 
 
-    /**
-     * Fallback handles any unhandled exceptions.
-     *
-     * @param ex
-     * @return
-//     */
 //    @ExceptionHandler(Exception.class)
 //    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-//    public ErrorResponse handleException(Exception ex) {
-//        return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "INTERNAL SERVER ERROR");
-//    }
+    public ErrorResponse handleException(Exception ex) {
+        return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "INTERNAL SERVER ERROR");
+    }
 
 }

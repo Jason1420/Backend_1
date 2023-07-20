@@ -1,4 +1,4 @@
-package com.studentmanagement.api;
+package com.studentmanagement.controller;
 
 import com.studentmanagement.dto.security.UserDTO;
 import com.studentmanagement.entity.security.RoleEntity;
@@ -16,7 +16,6 @@ public class AdminAPI {
 
     @GetMapping("/profile")
     public Authentication authentication(Authentication authentication){
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication;
     }
     @GetMapping("/admin/{id}")

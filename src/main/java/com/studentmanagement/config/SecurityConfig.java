@@ -4,7 +4,6 @@ package com.studentmanagement.config;
 import com.studentmanagement.jwt.JwtAuthEntryPoint;
 import com.studentmanagement.jwt.JwtAuthHandler;
 import com.studentmanagement.jwt.JwtAuthenticationFilter;
-import com.studentmanagement.jwt.JwtGenerator;
 import com.studentmanagement.service.impl.CustomUserDetailServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

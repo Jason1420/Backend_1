@@ -1,4 +1,4 @@
-package com.studentmanagement.api;
+package com.studentmanagement.controller;
 
 import com.studentmanagement.dto.StudentDTO;
 import com.studentmanagement.exception.Exception404;
