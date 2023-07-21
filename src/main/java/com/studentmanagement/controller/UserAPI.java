@@ -11,10 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserAPI {
@@ -29,6 +26,11 @@ public class UserAPI {
     public String signUpUser(@RequestBody @Valid UserDTO userDTO) {
         return accountService.addNewUser(userDTO);
     }
+    @GetMapping(path = "/signup/confirm")
+    public String confirm(@RequestParam("token") String token) {
+        return accountService.confirmToken(token);
+    }
+
 
     @PostMapping("/user/{id}")
     public String updateUser(@RequestBody @Valid UserDTO userDTO, @PathVariable("id") Long id) {

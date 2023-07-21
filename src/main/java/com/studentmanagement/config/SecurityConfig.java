@@ -39,6 +39,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/signup").anonymous()
+                        .requestMatchers("/signup/**").anonymous()
                         .requestMatchers(HttpMethod.GET, "/api/student").hasAnyAuthority("ADMIN", "MANAGER")
                         .requestMatchers(HttpMethod.GET, "/api/student/**").hasAnyAuthority("ADMIN", "MANAGER")
                         .requestMatchers(HttpMethod.POST, "/api/student").hasAnyAuthority("ADMIN", "MANAGER", "USER")

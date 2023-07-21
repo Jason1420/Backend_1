@@ -17,5 +17,7 @@ public interface AccountService {
     String updateRole(List<RoleEntity> roles, Long id);
     String deleteUser(Long[] ids);
     UserDTO showUser(Long id);
+    String confirmToken(String token);
+
 
 }
