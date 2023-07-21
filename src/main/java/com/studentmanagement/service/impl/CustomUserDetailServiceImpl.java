@@ -28,7 +28,8 @@ public class CustomUserDetailServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity userEntity = accountService.loadUserByUsername(username);
         if (userEntity == null) throw new BadCredentialsException(String.format("User %s not found", username));
-        List<SimpleGrantedAuthority> authorities = userEntity.getRoles().stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
+        List<SimpleGrantedAuthority> authorities = userEntity.getRoles().stream().map(r ->
+                new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
         UserDetails userDetails = User
                 .withUsername(userEntity.getUsername())
                 .password(userEntity.getPassword())
