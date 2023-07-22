@@ -17,9 +17,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class CustomUserDetailServiceImpl implements UserDetailsService {
-    private AccountService accountService;
+    private final AccountService accountService;
 
-    @Autowired
     public CustomUserDetailServiceImpl(AccountService accountService) {
         this.accountService = accountService;
     }

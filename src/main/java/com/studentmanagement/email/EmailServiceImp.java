@@ -18,8 +18,10 @@ import org.springframework.stereotype.Service;
 public class EmailServiceImp implements EmailSender{
 
     private final static Logger LOGGER = LoggerFactory.getLogger(EmailServiceImp.class);
+
     private JavaMailSender mailSender;
 
+    // Because Javamail Bean not allow inject, mailSender be null, so we need to create a new Object JavaMailSender
     public EmailServiceImp() {
         this.mailSender = new JavaMailSenderImpl();
     }

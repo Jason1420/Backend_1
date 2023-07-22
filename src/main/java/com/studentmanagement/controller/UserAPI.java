@@ -15,12 +15,15 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserAPI {
-    @Autowired
-    private AccountService accountService;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private JwtGenerator jwtGenerator;
+    private final AccountService accountService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtGenerator jwtGenerator;
+
+    public UserAPI(AccountService accountService, AuthenticationManager authenticationManager, JwtGenerator jwtGenerator) {
+        this.accountService = accountService;
+        this.authenticationManager = authenticationManager;
+        this.jwtGenerator = jwtGenerator;
+    }
 
     @PostMapping("/signup")
     public String signUpUser(@RequestBody @Valid UserDTO userDTO) {

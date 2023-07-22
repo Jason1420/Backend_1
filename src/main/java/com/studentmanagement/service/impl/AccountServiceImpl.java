@@ -25,14 +25,13 @@ import java.util.UUID;
 @Service
 @Transactional
 public class AccountServiceImpl implements AccountService {
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private PasswordEncoder passwordEncoder;
-    private UserConverter userConverter;
-    private ConfirmationTokenService confirmationTokenService;
-    private EmailSender emailSender;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserConverter userConverter;
+    private final ConfirmationTokenService confirmationTokenService;
+    private final EmailSender emailSender;
 
-    @Autowired
     public AccountServiceImpl(UserRepository userRepository, RoleRepository roleRepository,
                               PasswordEncoder passwordEncoder, UserConverter userConverter,
                               ConfirmationTokenService confirmationTokenService,EmailSender emailSender) {

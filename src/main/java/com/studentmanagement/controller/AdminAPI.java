@@ -11,8 +11,10 @@ import java.util.List;
 
 @RestController
 public class AdminAPI {
-    @Autowired
-    private AccountServiceImpl accountService;
+    private final AccountServiceImpl accountService;
+    public AdminAPI(AccountServiceImpl accountService) {
+        this.accountService = accountService;
+    }
 
     @GetMapping("/profile")
     public Authentication authentication(Authentication authentication){

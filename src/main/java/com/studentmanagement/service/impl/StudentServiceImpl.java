@@ -16,13 +16,10 @@ import java.util.List;
 
 @Service
 public class StudentServiceImpl implements com.studentmanagement.service.StudentService {
-    private StudentRepository studentRepository;
-    private StudentConverter studentConverter;
-    private Helper helper;
+    private final StudentRepository studentRepository;
+    private final StudentConverter studentConverter;
+    private final Helper helper;
 
-
-
-    @Autowired
     public StudentServiceImpl(StudentRepository studentRepository, StudentConverter studentConverter, Helper helper) {
         this.studentRepository = studentRepository;
         this.studentConverter = studentConverter;

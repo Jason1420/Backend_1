@@ -23,8 +23,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api")
 public class StudentAPI {
-    @Autowired
-    private StudentService studentService;
+    private final StudentService studentService;
+    public StudentAPI(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
     @GetMapping("/student")
     private List<StudentDTO> showStudent(@RequestParam(value = "firstName", required = false) String firstName,
