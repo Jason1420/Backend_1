@@ -23,6 +23,7 @@ import java.util.Map;
 @RequestMapping("/api")
 public class StudentAPI {
     private final StudentService studentService;
+
     public StudentAPI(StudentService studentService) {
         this.studentService = studentService;
     }
@@ -48,7 +49,7 @@ public class StudentAPI {
         ByteArrayInputStream actualData = studentService.getActualData();
         InputStreamResource file = new InputStreamResource(actualData);
         ResponseEntity<Resource> body = ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename="+fileName)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
                 .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
                 .body(file);
         return body;
@@ -61,18 +62,19 @@ public class StudentAPI {
     }
 
     @PostMapping("/student/import")
-    public ResponseEntity<?> importDataFromFile(@RequestParam("file")MultipartFile file){
-        if(Helper.checkExcelFormat(file)){
+    public ResponseEntity<?> importDataFromFile(@RequestParam("file") MultipartFile file) {
+        if (Helper.checkExcelFormat(file)) {
             studentService.importStudentFromExcelFile(file);
-            return ResponseEntity.ok(Map.of("Message","File is uploaded and saved to db"));
+            return ResponseEntity.ok(Map.of("Message", "File is uploaded and saved to db"));
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please upload file excel");
     }
+
     @PutMapping("/student/import")
-    public ResponseEntity<?> importDataFromFileput(@RequestParam("file")MultipartFile file){
-        if(Helper.checkExcelFormat(file)){
+    public ResponseEntity<?> importDataFromFileput(@RequestParam("file") MultipartFile file) {
+        if (Helper.checkExcelFormat(file)) {
             studentService.importStudentFromExcelFile(file);
-            return ResponseEntity.ok(Map.of("Message","File is uploaded and saved to db"));
+            return ResponseEntity.ok(Map.of("Message", "File is uploaded and saved to db"));
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please upload file excel");
     }

@@ -4,6 +4,7 @@ import com.studentmanagement.converter.UserConverter;
 import com.studentmanagement.dto.security.UserDTO;
 import com.studentmanagement.email.EmailSender;
 import com.studentmanagement.email.token.ConfirmationToken;
+import com.studentmanagement.email.token.ConfirmationTokenService;
 import com.studentmanagement.entity.security.RoleEntity;
 import com.studentmanagement.entity.security.UserEntity;
 import com.studentmanagement.exception.Exception404;
@@ -11,8 +12,6 @@ import com.studentmanagement.exception.Exception409;
 import com.studentmanagement.repository.security.RoleRepository;
 import com.studentmanagement.repository.security.UserRepository;
 import com.studentmanagement.service.AccountService;
-import com.studentmanagement.email.token.ConfirmationTokenService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +33,7 @@ public class AccountServiceImpl implements AccountService {
 
     public AccountServiceImpl(UserRepository userRepository, RoleRepository roleRepository,
                               PasswordEncoder passwordEncoder, UserConverter userConverter,
-                              ConfirmationTokenService confirmationTokenService,EmailSender emailSender) {
+                              ConfirmationTokenService confirmationTokenService, EmailSender emailSender) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
@@ -47,7 +46,7 @@ public class AccountServiceImpl implements AccountService {
     public UserEntity addNewUser(String username, String password, String email, String confirmPassword) {
         UserEntity userEntity = userRepository.findByUsername(username);
         if (userEntity != null) throw new RuntimeException("This user already exist");
-        if(!password.equals(confirmPassword)) throw new RuntimeException("Password not match");
+        if (!password.equals(confirmPassword)) throw new RuntimeException("Password not match");
         userEntity = UserEntity.builder()
                 .username(username)
                 .password(passwordEncoder.encode(password))
@@ -60,15 +59,15 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public String addNewUser(UserDTO dto) {
         UserEntity entity = userRepository.findByUsername(dto.getUsername());
-        if(entity != null){
+        if (entity != null) {
             throw new Exception409("This user already exits");
         }
-        if(dto.getId() != null){
+        if (dto.getId() != null) {
             UserEntity oldEntity = userRepository.findOneById(dto.getId());
             UserEntity newEntity = userConverter.toEntity(dto, oldEntity);
             newEntity.setPassword(passwordEncoder.encode(newEntity.getPassword()));
             userRepository.save(newEntity);
-            return "Successfully updated user with id: " +newEntity.getId();
+            return "Successfully updated user with id: " + newEntity.getId();
         }
         UserEntity newEntity = userConverter.toEntity(dto);
         newEntity.setPassword(passwordEncoder.encode(newEntity.getPassword()));
@@ -92,19 +91,19 @@ public class AccountServiceImpl implements AccountService {
         emailSender.send(
                 dto.getEmail(),
                 buildEmail(dto.getUsername(), link));
-        return "Successfully created an user with id :" + newEntity.getId()+"\nplease check email to verify your account";
+        return "Successfully created an user with id :" + newEntity.getId() + "\nplease check email to verify your account";
     }
 
 
     @Override
     public String addNewRole(String roleName) {
         RoleEntity entity = roleRepository.findByName(roleName);
-        if(entity != null){
+        if (entity != null) {
             return "This role already exist";
         }
         RoleEntity NewEntity = new RoleEntity(roleName);
         roleRepository.save(NewEntity);
-        return "role name "+roleName +" was added";
+        return "role name " + roleName + " was added";
     }
 
     @Override
@@ -135,7 +134,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public String deleteUser(Long[] ids) {
-        for(Long id:ids){
+        for (Long id : ids) {
             userRepository.deleteById(id);
         }
         return "Successfully deleted user";
@@ -144,12 +143,13 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public UserDTO showUser(Long id) {
         UserEntity entity = userRepository.findOneById(id);
-        if(entity != null){
+        if (entity != null) {
             UserDTO dto = userConverter.toDTO(entity);
             return dto;
         }
         throw new Exception404("NOT FOUND USER");
     }
+
     @Override
     @Transactional
     public String confirmToken(String token) {
@@ -173,10 +173,10 @@ public class AccountServiceImpl implements AccountService {
                 confirmationToken.getUser().getEmail());
         return "confirmed";
     }
+
     public int enableAppUser(String email) {
         return userRepository.enableAppUser(email);
     }
-
 
 
     private String buildEmail(String name, String link) {

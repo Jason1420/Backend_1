@@ -14,10 +14,10 @@ import java.util.Date;
 
 @Component
 public class JwtGenerator {
-    public String generateToken(Authentication authentication){
+    public String generateToken(Authentication authentication) {
         String username = authentication.getName();
         Date currentDate = new Date(System.currentTimeMillis());
-        Date expiredDate = new Date(currentDate.getTime()+JwtConstant.JWT_EXPIRATION);
+        Date expiredDate = new Date(currentDate.getTime() + JwtConstant.JWT_EXPIRATION);
         String token = Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
@@ -26,21 +26,24 @@ public class JwtGenerator {
                 .compact();
         return token;
     }
-    public String getUsernameFromJwt(String token){
+
+    public String getUsernameFromJwt(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(JwtConstant.JWT_SECRET)
                 .parseClaimsJws(token)
                 .getBody();
         return claims.getSubject();
     }
-    public boolean validateToken(String token){
+
+    public boolean validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(JwtConstant.JWT_SECRET).parseClaimsJws(token);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new AuthenticationCredentialsNotFoundException("JWT was expired or incorrect");
         }
     }
+
     private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(JwtConstant.JWT_SECRET);
         return Keys.hmacShaKeyFor(keyBytes);

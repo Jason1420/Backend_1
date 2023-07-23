@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
+
 @Component
 public class JwtAuthHandler implements AccessDeniedHandler {
 
@@ -19,6 +20,7 @@ public class JwtAuthHandler implements AccessDeniedHandler {
     public JwtAuthHandler(@Qualifier("handlerExceptionResolver") HandlerExceptionResolver resolver) {
         this.resolver = resolver;
     }
+
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response,
                        AccessDeniedException accessDeniedException) throws IOException, ServletException {

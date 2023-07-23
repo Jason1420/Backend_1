@@ -10,12 +10,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
+
 @Component
-public class JwtAuthEntryPoint implements AuthenticationEntryPoint{
+public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
     private final HandlerExceptionResolver resolver;
+
     public JwtAuthEntryPoint(@Qualifier("handlerExceptionResolver") HandlerExceptionResolver resolver) {
         this.resolver = resolver;
     }
+
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {

@@ -28,6 +28,7 @@ public class UserAPI {
     public String signUpUser(@RequestBody @Valid UserDTO userDTO) {
         return accountService.addNewUser(userDTO);
     }
+
     @GetMapping(path = "/signup/confirm")
     public String confirm(@RequestParam("token") String token) {
         return accountService.confirmToken(token);
@@ -48,7 +49,7 @@ public class UserAPI {
                         loginDTO.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtGenerator.generateToken(authentication);
-        return  new AuthResponseDTO(token).toString();
+        return new AuthResponseDTO(token).toString();
     }
 
 }

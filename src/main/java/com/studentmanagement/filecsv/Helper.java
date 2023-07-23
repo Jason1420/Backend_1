@@ -38,6 +38,7 @@ public class Helper {
     };
 
     public static String SHEET_NAME = "student_data";
+
     // Check File Format
     public static boolean checkExcelFormat(MultipartFile file) {
         String contentType = file.getContentType();
@@ -58,9 +59,9 @@ public class Helper {
             int rowNumber = 0;
             Iterator<Row> rows = sheet.iterator();
 
-            while(rows.hasNext()){
+            while (rows.hasNext()) {
                 Row row = rows.next();
-                if(rowNumber == 0 ){
+                if (rowNumber == 0) {
                     rowNumber++;
                     continue;
                 }
@@ -69,15 +70,15 @@ public class Helper {
                 StudentEntity s = new StudentEntity();
                 int cid = 0;
 
-                while(cells.hasNext()){
+                while (cells.hasNext()) {
                     Cell cell = cells.next();
-                    switch(cid){
+                    switch (cid) {
                         // khong duoc
                         case 0:
                             s.setId((long) cell.getNumericCellValue());
                             break;
                         case 1:
-                            s.setCode((long)cell.getNumericCellValue());
+                            s.setCode((long) cell.getNumericCellValue());
                             break;
                         case 2:
                             s.setFirstName(cell.getStringCellValue());
@@ -89,7 +90,7 @@ public class Helper {
                             s.setGender(Gender.valueOf(cell.getStringCellValue()));
                             break;
                         case 5:
-                          s.setDateOfBirth(cell.getDateCellValue());
+                            s.setDateOfBirth(cell.getDateCellValue());
                             break;
                         case 6:
                             s.setDepartment(cell.getStringCellValue());

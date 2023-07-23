@@ -1,9 +1,7 @@
 package com.studentmanagement.service.impl;
 
 import com.studentmanagement.entity.security.UserEntity;
-import com.studentmanagement.exception.Exception404;
 import com.studentmanagement.service.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

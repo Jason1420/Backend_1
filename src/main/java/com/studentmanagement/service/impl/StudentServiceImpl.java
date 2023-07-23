@@ -5,7 +5,6 @@ import com.studentmanagement.dto.StudentDTO;
 import com.studentmanagement.entity.StudentEntity;
 import com.studentmanagement.filecsv.Helper;
 import com.studentmanagement.repository.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -72,6 +71,7 @@ public class StudentServiceImpl implements com.studentmanagement.service.Student
         }
         return listDTO;
     }
+
     @Override
     public ByteArrayInputStream getActualData() throws IOException {
         List<StudentEntity> all = studentRepository.findAll();
@@ -81,10 +81,10 @@ public class StudentServiceImpl implements com.studentmanagement.service.Student
 
     @Override
     public void importStudentFromExcelFile(MultipartFile file) {
-        try{
+        try {
             List<StudentEntity> list = helper.convertFileExcelToListStudent(file.getInputStream());
             studentRepository.saveAll(list);
-        }catch(IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
