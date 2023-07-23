@@ -5,7 +5,6 @@ import com.studentmanagement.exception.Exception404;
 import com.studentmanagement.filecsv.Helper;
 import com.studentmanagement.service.StudentService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;

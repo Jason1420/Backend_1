@@ -3,7 +3,6 @@ package com.studentmanagement.controller;
 import com.studentmanagement.dto.security.UserDTO;
 import com.studentmanagement.entity.security.RoleEntity;
 import com.studentmanagement.service.impl.AccountServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
