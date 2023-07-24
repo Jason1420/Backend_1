@@ -54,19 +54,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void addRoleToUser(String username, String role) {
-        UserEntity user = userRepository.findByUsername(username);
-
-    }
-
-    @Override
-    public void removeRoleFromUser(String username, String role) {
-        UserEntity userEntity = userRepository.findByUsername(username);
-        RoleEntity roleEntity = roleRepository.findById(role).get();
-        userEntity.getRoles().remove(roleEntity);
-    }
-
-    @Override
     public UserEntity loadUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }

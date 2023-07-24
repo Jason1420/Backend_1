@@ -11,10 +11,6 @@ public interface AccountService {
 
     String addNewRole(String name);
 
-    void addRoleToUser(String username, String role);
-
-    void removeRoleFromUser(String username, String role);
-
     UserEntity loadUserByUsername(String username);
 
     String updateRole(List<RoleEntity> roles, Long id);
