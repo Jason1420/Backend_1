@@ -42,59 +42,6 @@ public class AccountServiceImpl implements AccountService {
         this.emailSender = emailSender;
     }
 
-    //    @Override
-    public UserEntity addNewUser(String username, String password, String email, String confirmPassword) {
-        UserEntity userEntity = userRepository.findByUsername(username);
-        if (userEntity != null) throw new RuntimeException("This user already exist");
-        if (!password.equals(confirmPassword)) throw new RuntimeException("Password not match");
-        userEntity = UserEntity.builder()
-                .username(username)
-                .password(passwordEncoder.encode(password))
-                .email(email)
-                .build();
-        UserEntity savedUser = userRepository.save(userEntity);
-        return savedUser;
-    }
-
-    @Override
-    public String addNewUser(UserDTO dto) {
-        UserEntity entity = userRepository.findByUsername(dto.getUsername());
-        if (entity != null) {
-            throw new Exception409("This user already exits");
-        }
-        if (dto.getId() != null) {
-            UserEntity oldEntity = userRepository.findOneById(dto.getId());
-            UserEntity newEntity = userConverter.toEntity(dto, oldEntity);
-            newEntity.setPassword(passwordEncoder.encode(newEntity.getPassword()));
-            userRepository.save(newEntity);
-            return "Successfully updated user with id: " + newEntity.getId();
-        }
-        UserEntity newEntity = userConverter.toEntity(dto);
-        newEntity.setPassword(passwordEncoder.encode(newEntity.getPassword()));
-        RoleEntity roleUser = new RoleEntity("USER");
-        List<RoleEntity> listEntity = new ArrayList<>();
-        listEntity.add(roleUser);
-        newEntity.setRoles(listEntity);
-        userRepository.save(newEntity);
-        String token = UUID.randomUUID().toString();
-
-        ConfirmationToken confirmationToken = new ConfirmationToken(
-                token,
-                LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(15),
-                newEntity
-        );
-
-        confirmationTokenService.saveConfirmationToken(
-                confirmationToken);
-        String link = "http://localhost:8080/signup/confirm?token=" + token;
-        emailSender.send(
-                dto.getEmail(),
-                buildEmail(dto.getUsername(), link));
-        return "Successfully created an user with id :" + newEntity.getId() + "\nplease check email to verify your account";
-    }
-
-
     @Override
     public String addNewRole(String roleName) {
         RoleEntity entity = roleRepository.findByName(roleName);
@@ -151,6 +98,44 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public String addNewUser(UserDTO dto) {
+        UserEntity entity = userRepository.findByUsername(dto.getUsername());
+        if (entity != null) {
+            throw new Exception409("This user already exits");
+        }
+        if (dto.getId() != null) {
+            UserEntity oldEntity = userRepository.findOneById(dto.getId());
+            UserEntity newEntity = userConverter.toEntity(dto, oldEntity);
+            newEntity.setPassword(passwordEncoder.encode(newEntity.getPassword()));
+            userRepository.save(newEntity);
+            return "Successfully updated user with id: " + newEntity.getId();
+        }
+        UserEntity newEntity = userConverter.toEntity(dto);
+        newEntity.setPassword(passwordEncoder.encode(newEntity.getPassword()));
+        RoleEntity roleUser = new RoleEntity("USER");
+        List<RoleEntity> listEntity = new ArrayList<>();
+        listEntity.add(roleUser);
+        newEntity.setRoles(listEntity);
+        userRepository.save(newEntity);
+        String token = UUID.randomUUID().toString();
+
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15),
+                newEntity
+        );
+
+        confirmationTokenService.saveConfirmationToken(
+                confirmationToken);
+        String link = "http://localhost:8080/signup/confirm?token=" + token;
+        emailSender.send(
+                dto.getEmail(),
+                buildEmail(dto.getUsername(), link));
+        return "Successfully created an user with id :" + newEntity.getId() + "\nplease check email to verify your account";
+    }
+
+    @Override
     @Transactional
     public String confirmToken(String token) {
         ConfirmationToken confirmationToken = confirmationTokenService
@@ -170,16 +155,11 @@ public class AccountServiceImpl implements AccountService {
 
         confirmationTokenService.setConfirmedAt(token);
         userRepository.enableAppUser(
-                confirmationToken.getUser().getEmail());
+                confirmationToken.getUser().getUsername());
         return "confirmed";
     }
 
-    public int enableAppUser(String email) {
-        return userRepository.enableAppUser(email);
-    }
-
-
-    private String buildEmail(String name, String link) {
+    public String buildEmail(String name, String link) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                 "\n" +
                 "<span style=\"display:none;font-size:1px;color:#fff;max-height:0\"></span>\n" +

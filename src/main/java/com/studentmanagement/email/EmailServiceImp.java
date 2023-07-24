@@ -18,7 +18,7 @@ public class EmailServiceImp implements EmailSender{
 
     private JavaMailSender mailSender;
 
-    // Because Javamail Bean not allow inject, mailSender be null, so we need to create a new Object JavaMailSender
+    // Because Javamail Bean don't allow inject, mailSender be null, so we need to create a new Object JavaMailSenderImpl
     public EmailServiceImp() {
         this.mailSender = new JavaMailSenderImpl();
     }
@@ -33,7 +33,7 @@ public class EmailServiceImp implements EmailSender{
             helper.setText(email, true);
             helper.setTo(to);
             helper.setSubject("Confirm your email");
-            helper.setFrom("user@ehaitestmail.com");
+            helper.setFrom("system@gmail.com");
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             LOGGER.error("failed to send email", e);

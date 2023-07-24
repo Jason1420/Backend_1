@@ -31,7 +31,7 @@ public class StudentAPI {
     @GetMapping("/student")
     private List<StudentDTO> showStudent(@RequestParam(value = "firstName", required = false) String firstName,
                                          @RequestParam(value = "phoneNumber", required = false) String phoneNumber) {
-        List<StudentDTO> listResult = null;
+        List<StudentDTO> listResult;
         if (firstName != null) {
             listResult = studentService.searchStudentsByFirstName(firstName);
             if (listResult.size() > 0) return listResult;
@@ -48,11 +48,10 @@ public class StudentAPI {
         String fileName = "student.xlsx";
         ByteArrayInputStream actualData = studentService.getActualData();
         InputStreamResource file = new InputStreamResource(actualData);
-        ResponseEntity<Resource> body = ResponseEntity.ok()
+        return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
                 .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
                 .body(file);
-        return body;
     }
 
     @PostMapping("/student")
@@ -81,8 +80,8 @@ public class StudentAPI {
 
     @PutMapping("/student/{id}")
     private String updateStudent(@RequestBody @Valid StudentDTO dto, @PathVariable("id") Long id) {
-        dto.setId(id);
-        return studentService.save(dto);
+            dto.setId(id);
+            return studentService.save(dto);
     }
 
     @DeleteMapping("/student")

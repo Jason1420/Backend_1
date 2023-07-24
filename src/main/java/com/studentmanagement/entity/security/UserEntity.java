@@ -12,7 +12,6 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Data
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
@@ -35,6 +34,48 @@ public class UserEntity implements UserDetails {
         this.username = username;
         this.password = password;
         this.email = email;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<RoleEntity> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RoleEntity> roles) {
+        this.roles = roles;
     }
 
     @Override
@@ -60,5 +101,18 @@ public class UserEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", locked=" + locked +
+                ", enabled=" + enabled +
+                ", roles=" + roles +
+                '}';
     }
 }

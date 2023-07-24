@@ -27,11 +27,11 @@ public class StudentServiceImpl implements com.studentmanagement.service.Student
 
     @Override
     public String save(StudentDTO dto) {
-        if (dto.getId() != null) {
-            StudentEntity oldEntity = studentRepository.findOneById(dto.getId());
-            StudentEntity entity = studentConverter.toEntity(dto, oldEntity);
-            studentRepository.save(entity);
-            return "Successfully update!";
+        if (dto.getId() != null && studentRepository.findOneById(dto.getId()) != null) {
+                StudentEntity oldEntity = studentRepository.findOneById(dto.getId());
+                StudentEntity entity = studentConverter.toEntity(dto, oldEntity);
+                studentRepository.save(entity);
+                return "Successfully update!";
         } else {
             if (studentRepository.findByCode(dto.getCode()) != null) {
                 return "Code existed!";

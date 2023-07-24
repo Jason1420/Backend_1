@@ -1,6 +1,7 @@
 package com.studentmanagement.service.impl;
 
 import com.studentmanagement.entity.security.UserEntity;
+import com.studentmanagement.exception.Exception403;
 import com.studentmanagement.service.AccountService;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,11 +28,10 @@ public class CustomUserDetailServiceImpl implements UserDetailsService {
         if (userEntity == null) throw new BadCredentialsException(String.format("User %s not found", username));
         List<SimpleGrantedAuthority> authorities = userEntity.getRoles().stream().map(r ->
                 new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
-        UserDetails userDetails = User
-                .withUsername(userEntity.getUsername())
-                .password(userEntity.getPassword())
-                .authorities(authorities)
-                .build();
+        UserDetails userDetails = new User(userEntity.getUsername(),userEntity.getPassword(),userEntity.isEnabled(),
+                userEntity.isAccountNonExpired(), userEntity.isCredentialsNonExpired(),
+                true, authorities);
+        if(!userEntity.isEnabled()) throw new Exception403("Unconfirmed account");
         return userDetails;
     }
 }
