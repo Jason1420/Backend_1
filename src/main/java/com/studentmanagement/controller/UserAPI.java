@@ -1,6 +1,5 @@
 package com.studentmanagement.controller;
 
-import com.studentmanagement.converter.UserConverter;
 import com.studentmanagement.dto.security.AuthResponseDTO;
 import com.studentmanagement.dto.security.LoginDTO;
 import com.studentmanagement.dto.security.UserDTO;
