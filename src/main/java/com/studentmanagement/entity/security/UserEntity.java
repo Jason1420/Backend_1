@@ -3,7 +3,6 @@ package com.studentmanagement.entity.security;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,12 +28,6 @@ public class UserEntity implements UserDetails {
 
     @ManyToMany(fetch = FetchType.EAGER)
     List<RoleEntity> roles;
-
-    public UserEntity(String username, String password, String email) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-    }
 
     public Long getId() {
         return id;

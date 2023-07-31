@@ -1,5 +1,7 @@
 package com.studentmanagement.jwt;
 
+import com.studentmanagement.entity.security.UserEntity;
+import com.studentmanagement.repository.security.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -11,14 +13,23 @@ import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.Map;
 
 @Component
 public class JwtGenerator {
+    private final UserRepository userRepository;
+
+    public JwtGenerator(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     public String generateToken(Authentication authentication) {
         String username = authentication.getName();
+        UserEntity entity = userRepository.findByUsername(username);
         Date currentDate = new Date(System.currentTimeMillis());
         Date expiredDate = new Date(currentDate.getTime() + JwtConstant.JWT_EXPIRATION);
         String token = Jwts.builder()
+                .setClaims(Map.of("role",entity.getRoles(),"name",username))
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(expiredDate)

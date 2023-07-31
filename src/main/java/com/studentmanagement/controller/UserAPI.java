@@ -68,6 +68,7 @@ public class UserAPI {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtGenerator.generateToken(authentication);
         return new AuthResponseDTO(token).toString();
+//        return null;
     }
 
     @PostMapping("/verify")

@@ -8,5 +8,5 @@ public interface ConfirmationTokenService {
 
     Optional<ConfirmationToken> getToken(String token);
 
-    int setConfirmedAt(String token);
+    void setConfirmedAt(String token);
 }

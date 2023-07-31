@@ -1,6 +1,5 @@
 package com.studentmanagement.dto.security;
 
-import com.studentmanagement.entity.security.RoleEntity;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

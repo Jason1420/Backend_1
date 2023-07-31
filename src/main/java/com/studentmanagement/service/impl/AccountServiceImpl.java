@@ -78,8 +78,7 @@ public class AccountServiceImpl implements AccountService {
     public UserDTO showUser(Long id) {
         UserEntity entity = userRepository.findOneById(id);
         if (entity != null) {
-            UserDTO dto = userConverter.toDTO(entity);
-            return dto;
+            return userConverter.toDTO(entity);
         }
         throw new Exception404("NOT FOUND USER");
     }

@@ -17,7 +17,6 @@ public class StudentManagementApplication {
         SpringApplication.run(StudentManagementApplication.class, args);
     }
 
-    //ma hoa password
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

@@ -42,10 +42,7 @@ public class Helper {
     // Check File Format
     public static boolean checkExcelFormat(MultipartFile file) {
         String contentType = file.getContentType();
-        if (contentType.equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")) {
-            return true;
-        }
-        return false;
+        return contentType.equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
     }
 
     //Convert file excel to List
@@ -147,7 +144,7 @@ public class Helper {
                 dataRow.createCell(4).setCellValue(student.getGender().toString());
                 dataRow.createCell(5).setCellValue(student.getDateOfBirth());
                 dataRow.createCell(6).setCellValue(student.getDepartment());
-                dataRow.createCell(7).setCellValue(student.getPhoneNumber().toString());
+                dataRow.createCell(7).setCellValue(student.getPhoneNumber());
                 dataRow.createCell(8).setCellValue(student.getEmail());
                 dataRow.createCell(9).setCellValue(student.getAddress());
 
