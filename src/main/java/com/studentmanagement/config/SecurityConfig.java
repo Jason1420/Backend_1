@@ -33,8 +33,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                                 .requestMatchers("/signup").permitAll()
                                 .requestMatchers("/signup/**").permitAll()
-                                .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
-//                        .requestMatchers("/admin/**").permitAll()
+//                                .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
+                                .requestMatchers("/admin/**").permitAll()
                                 .requestMatchers("/verify").permitAll()
                                 .requestMatchers("/profile").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/student").hasAnyAuthority("ADMIN", "MANAGER", "USER")

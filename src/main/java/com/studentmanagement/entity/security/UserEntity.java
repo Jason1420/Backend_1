@@ -8,7 +8,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -17,6 +19,7 @@ import java.util.List;
 @Table(name = "users")
 public class UserEntity implements UserDetails {
     @Id
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
@@ -25,9 +28,13 @@ public class UserEntity implements UserDetails {
     private String email;
     private Boolean locked = false;
     private Boolean enabled = false;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    List<RoleEntity> roles;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<RoleEntity> roles = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -63,11 +70,11 @@ public class UserEntity implements UserDetails {
         this.email = email;
     }
 
-    public List<RoleEntity> getRoles() {
+    public Set<RoleEntity> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<RoleEntity> roles) {
+    public void setRoles(Set<RoleEntity> roles) {
         this.roles = roles;
     }
 

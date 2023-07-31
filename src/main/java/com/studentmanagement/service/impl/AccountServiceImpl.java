@@ -59,9 +59,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public String updateRole(List<RoleEntity> roles, Long id) {
+    public String updateRole(Long role_id, Long id) {
         UserEntity entity = userRepository.findOneById(id);
-        entity.setRoles(roles);
+        entity.setRoles(roleRepository.findOneById(role_id));
         userRepository.save(entity);
         return "successfully updated role";
     }
@@ -98,10 +98,10 @@ public class AccountServiceImpl implements AccountService {
         }
         UserEntity newEntity = userConverter.toEntity(dto);
         newEntity.setPassword(passwordEncoder.encode(newEntity.getPassword()));
-        RoleEntity roleUser = new RoleEntity("USER");
-        List<RoleEntity> listEntity = new ArrayList<>();
-        listEntity.add(roleUser);
-        newEntity.setRoles(listEntity);
+//        RoleEntity roleUser = new RoleEntity("USER");
+//        List<RoleEntity> listEntity = new ArrayList<>();
+//        listEntity.add(roleUser);
+        newEntity.setRoles(roleRepository.findOneById(3L));
         userRepository.save(newEntity);
         String token = UUID.randomUUID().toString();
 

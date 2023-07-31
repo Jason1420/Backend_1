@@ -32,8 +32,8 @@ public class AdminAPI {
     }
 
     @PutMapping("/admin/{id}")
-    public String updateRoleToUser(@RequestBody List<RoleEntity> roles, @PathVariable("id") Long id) {
-        return accountService.updateRole(roles, id);
+    public String updateRoleToUser(@RequestBody Long role_id, @PathVariable("id") Long user_id) {
+        return accountService.updateRole(role_id, user_id);
     }
 
     @DeleteMapping("/admin")

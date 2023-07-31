@@ -42,7 +42,7 @@ public class UserAPI {
     }
 
     @PostMapping("/signup")
-    public String signUpUser(@RequestBody @Valid UserDTO userDTO) {
+    public String signUpUser(@RequestBody /*@Valid*/ UserDTO userDTO) {
         return accountService.addNewUser(userDTO);
     }
 
