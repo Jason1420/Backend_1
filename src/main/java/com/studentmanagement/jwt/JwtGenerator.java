@@ -29,7 +29,7 @@ public class JwtGenerator {
         Date currentDate = new Date(System.currentTimeMillis());
         Date expiredDate = new Date(currentDate.getTime() + JwtConstant.JWT_EXPIRATION);
         String token = Jwts.builder()
-                .setClaims(Map.of("role",entity.getRoles(),"name",username))
+                .setClaims(Map.of("role", entity.getRoles(), "name", username))
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(expiredDate)

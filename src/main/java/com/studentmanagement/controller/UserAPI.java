@@ -23,7 +23,6 @@ import java.util.UUID;
 @RestController
 public class UserAPI {
 
-
     private final AccountServiceImpl accountService;
     private final AuthenticationManager authenticationManager;
     private final JwtGenerator jwtGenerator;
@@ -51,7 +50,6 @@ public class UserAPI {
     public String confirm(@RequestParam("token") String token) {
         return accountService.confirmToken(token);
     }
-
 
     @PostMapping("/user/{id}")
     public String updateUser(@RequestBody @Valid UserDTO userDTO, @PathVariable("id") Long id) {

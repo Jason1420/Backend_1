@@ -21,30 +21,32 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
     private final CustomUserDetailServiceImpl userDetailServiceImpl;
+
     public SecurityConfig(CustomUserDetailServiceImpl userDetailServiceImpl) {
         this.userDetailServiceImpl = userDetailServiceImpl;
     }
+
     //Config authorization and authentication
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/signup").permitAll()
-                        .requestMatchers("/signup/**").permitAll()
-                        .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
+                                .requestMatchers("/signup").permitAll()
+                                .requestMatchers("/signup/**").permitAll()
+                                .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
 //                        .requestMatchers("/admin/**").permitAll()
-                        .requestMatchers("/verify").permitAll()
-                        .requestMatchers("/profile").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/student").hasAnyAuthority("ADMIN", "MANAGER","USER")
-                        .requestMatchers(HttpMethod.GET, "/api/student/**").hasAnyAuthority("ADMIN", "MANAGER")
-                        .requestMatchers(HttpMethod.POST, "/api/student").hasAnyAuthority("ADMIN", "MANAGER", "USER")
-                        .requestMatchers(HttpMethod.POST, "/api/student/**").hasAnyAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/student/**").hasAnyAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/student/**").hasAnyAuthority("ADMIN", "MANAGER")
-                        .requestMatchers(HttpMethod.DELETE, "/api/student").hasAnyAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/user/**").hasAnyAuthority("MANAGER", "ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                        .anyRequest().authenticated()
+                                .requestMatchers("/verify").permitAll()
+                                .requestMatchers("/profile").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/student").hasAnyAuthority("ADMIN", "MANAGER", "USER")
+                                .requestMatchers(HttpMethod.GET, "/api/student/**").hasAnyAuthority("ADMIN", "MANAGER")
+                                .requestMatchers(HttpMethod.POST, "/api/student").hasAnyAuthority("ADMIN", "MANAGER", "USER")
+                                .requestMatchers(HttpMethod.POST, "/api/student/**").hasAnyAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/student/**").hasAnyAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/student/**").hasAnyAuthority("ADMIN", "MANAGER")
+                                .requestMatchers(HttpMethod.DELETE, "/api/student").hasAnyAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/user/**").hasAnyAuthority("MANAGER", "ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                                .anyRequest().authenticated()
                 )
                 .logout(LogoutConfigurer::permitAll)
                 .csrf(AbstractHttpConfigurer::disable)
