@@ -1,6 +1,8 @@
 package com.studentmanagement.config;
 
 
+import com.studentmanagement.jwt.JwtAuthEntryPoint;
+import com.studentmanagement.jwt.JwtAuthHandler;
 import com.studentmanagement.jwt.JwtAuthenticationFilter;
 import com.studentmanagement.service.impl.CustomUserDetailServiceImpl;
 import org.springframework.context.annotation.Bean;
@@ -21,9 +23,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
     private final CustomUserDetailServiceImpl userDetailServiceImpl;
+    private final JwtAuthEntryPoint jwtAuthEntryPoint;
+    private final JwtAuthHandler jwtAuthHandler;
 
-    public SecurityConfig(CustomUserDetailServiceImpl userDetailServiceImpl) {
+    public SecurityConfig(CustomUserDetailServiceImpl userDetailServiceImpl,
+                          JwtAuthEntryPoint jwtAuthEntryPoint, JwtAuthHandler jwtAuthHandler) {
         this.userDetailServiceImpl = userDetailServiceImpl;
+        this.jwtAuthEntryPoint = jwtAuthEntryPoint;
+        this.jwtAuthHandler = jwtAuthHandler;
     }
 
     //Config authorization and authentication
@@ -37,7 +44,7 @@ public class SecurityConfig {
                                 .requestMatchers("/admin/**").permitAll()
                                 .requestMatchers("/verify").permitAll()
                                 .requestMatchers("/profile").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/student").hasAnyAuthority("ADMIN", "MANAGER", "USER")
+                                .requestMatchers(HttpMethod.GET, "/api/student").hasAnyAuthority("ADMIN", "MANAGER")
                                 .requestMatchers(HttpMethod.GET, "/api/student/**").hasAnyAuthority("ADMIN", "MANAGER")
                                 .requestMatchers(HttpMethod.POST, "/api/student").hasAnyAuthority("ADMIN", "MANAGER", "USER")
                                 .requestMatchers(HttpMethod.POST, "/api/student/**").hasAnyAuthority("ADMIN")
@@ -52,7 +59,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .userDetailsService(userDetailServiceImpl);
+                .userDetailsService(userDetailServiceImpl)
+                .exceptionHandling(exceptionHanding -> exceptionHanding
+                        .accessDeniedHandler(this.jwtAuthHandler)
+                        .authenticationEntryPoint(this.jwtAuthEntryPoint));
         http.addFilterBefore(jwtAuthenticationFilterr(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
