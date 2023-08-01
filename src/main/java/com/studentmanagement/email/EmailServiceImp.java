@@ -18,7 +18,6 @@ public class EmailServiceImp implements EmailSender{
 
     private final JavaMailSender mailSender;
 
-    // Because Javamail Bean don't allow inject, mailSender be null, so we need to create a new Object JavaMailSenderImpl
     public EmailServiceImp() {
         this.mailSender = new JavaMailSenderImpl();
     }

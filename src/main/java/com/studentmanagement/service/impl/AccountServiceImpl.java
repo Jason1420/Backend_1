@@ -17,8 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -59,9 +57,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public String updateRole(Long role_id, Long id) {
+    public String updateRole(String role_name, Long id) {
         UserEntity entity = userRepository.findOneById(id);
-        entity.setRoles(roleRepository.findOneById(role_id));
+        entity.setRoles(roleRepository.findOneByName(role_name));
         userRepository.save(entity);
         return "successfully updated role";
     }
@@ -98,10 +96,7 @@ public class AccountServiceImpl implements AccountService {
         }
         UserEntity newEntity = userConverter.toEntity(dto);
         newEntity.setPassword(passwordEncoder.encode(newEntity.getPassword()));
-//        RoleEntity roleUser = new RoleEntity("USER");
-//        List<RoleEntity> listEntity = new ArrayList<>();
-//        listEntity.add(roleUser);
-        newEntity.setRoles(roleRepository.findOneById(3L));
+        newEntity.setRoles(roleRepository.findOneByName("USER"));
         userRepository.save(newEntity);
         String token = UUID.randomUUID().toString();
 

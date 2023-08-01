@@ -60,9 +60,7 @@ public class UserAPI {
     @PostMapping("/login")
     public String login(@RequestBody LoginDTO loginDTO) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginDTO.getUsername(),
-                        loginDTO.getPassword()));
+                new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtGenerator.generateToken(authentication);
         return new AuthResponseDTO(token).toString();

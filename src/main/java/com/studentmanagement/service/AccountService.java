@@ -13,7 +13,7 @@ public interface AccountService {
 
     UserEntity loadUserByUsername(String username);
 
-    String updateRole(Long role_id, Long user_id);
+    String updateRole(String roleName, Long userId);
 
     String deleteUser(Long[] ids);
 

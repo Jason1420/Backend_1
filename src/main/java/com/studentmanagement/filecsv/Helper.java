@@ -71,9 +71,9 @@ public class Helper {
                     Cell cell = cells.next();
                     switch (cid) {
                         // khong duoc
-                        case 0:
-                            s.setId((long) cell.getNumericCellValue());
-                            break;
+//                        case 0:
+//                            s.setId((long) cell.getNumericCellValue());
+//                            break;
                         case 1:
                             s.setCode((long) cell.getNumericCellValue());
                             break;
