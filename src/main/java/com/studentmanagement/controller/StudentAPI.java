@@ -1,12 +1,14 @@
 package com.studentmanagement.controller;
 
 import com.studentmanagement.dto.StudentDTO;
+import com.studentmanagement.entity.StudentEntity;
 import com.studentmanagement.exception.Exception404;
 import com.studentmanagement.filecsv.Helper;
 import com.studentmanagement.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -41,6 +43,20 @@ public class StudentAPI {
         } else {
             throw new Exception404();
         }
+    }
+    @GetMapping("/student/search/{field}")
+    private List<StudentDTO> showAllStudentWithSort(@PathVariable("field") String field) {
+        return studentService.showAllStudentWithSort(field);
+    }
+    @GetMapping("/student/search/{offset}/{size}")
+    private Page<StudentEntity> showAllStudentWithPagination(@PathVariable("offset") int offset, @PathVariable("size") int size) {
+        return studentService.showAllStudentWithPagination(offset, size);
+    }
+
+    @GetMapping("/student/search/{offset}/{size}/{field}")
+    private Page<StudentEntity> showAllStudentWithPagination(@PathVariable("offset") int offset, @PathVariable("size") int size,
+                                                             @PathVariable("field") String field) {
+        return studentService.showAllStudentWithPaginationAndSort(offset, size,field);
     }
 
     @GetMapping("/student/export")

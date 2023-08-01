@@ -5,6 +5,10 @@ import com.studentmanagement.dto.StudentDTO;
 import com.studentmanagement.entity.StudentEntity;
 import com.studentmanagement.filecsv.Helper;
 import com.studentmanagement.repository.StudentRepository;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,10 +32,10 @@ public class StudentServiceImpl implements com.studentmanagement.service.Student
     @Override
     public String save(StudentDTO dto) {
         if (dto.getId() != null && studentRepository.findOneById(dto.getId()) != null) {
-                StudentEntity oldEntity = studentRepository.findOneById(dto.getId());
-                StudentEntity entity = studentConverter.toEntity(dto, oldEntity);
-                studentRepository.save(entity);
-                return "Successfully update!";
+            StudentEntity oldEntity = studentRepository.findOneById(dto.getId());
+            StudentEntity entity = studentConverter.toEntity(dto, oldEntity);
+            studentRepository.save(entity);
+            return "Successfully update!";
         } else {
             if (studentRepository.findByCode(dto.getCode()) != null) {
                 return "Code existed!";
@@ -89,4 +93,27 @@ public class StudentServiceImpl implements com.studentmanagement.service.Student
         }
     }
 
+    @Override
+    public List<StudentDTO> showAllStudentWithSort(String field) {
+        List<StudentEntity> allEntity = studentRepository.findAll(Sort.by(field));
+        List<StudentDTO> allDto = new ArrayList<>();
+        for (StudentEntity entity : allEntity) {
+            StudentDTO dto = studentConverter.toDTO(entity);
+            allDto.add(dto);
+        }
+        return allDto;
+    }
+
+    @Override
+    public Page<StudentEntity> showAllStudentWithPagination(int offset, int size) {
+        return studentRepository.findAll(PageRequest.of(offset, size));
+//        Page<StudentDTO> allDto = new ;
+//
+//        return allDto;
+    }
+
+    @Override
+    public Page<StudentEntity> showAllStudentWithPaginationAndSort(int offset, int size, String field) {
+        return studentRepository.findAll(PageRequest.of(offset, size).withSort(Sort.by(field)));
+    }
 }
