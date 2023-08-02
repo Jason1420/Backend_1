@@ -106,10 +106,9 @@ public class StudentServiceImpl implements com.studentmanagement.service.Student
 
     @Override
     public Page<StudentEntity> showAllStudentWithPagination(int offset, int size) {
-        return studentRepository.findAll(PageRequest.of(offset, size));
-//        Page<StudentDTO> allDto = new ;
-//
-//        return allDto;
+        return studentRepository.findAll(PageRequest.of(offset - 1, size));
+// convert to DTO
+        // use Pageable
     }
 
     @Override
