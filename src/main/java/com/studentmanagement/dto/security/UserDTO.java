@@ -14,7 +14,6 @@ public class UserDTO {
     @Pattern(regexp = "^[a-zA-z][^\\W_]{7,14}$",
             message = "username must be 8-15 characters and must start with a letter")
     private String username;
-    @NotBlank(message = "User name shouldn't be blank")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
             message = "password minimum eight characters, at least one uppercase letter," +
                     " one lowercase letter, one number and one special character")

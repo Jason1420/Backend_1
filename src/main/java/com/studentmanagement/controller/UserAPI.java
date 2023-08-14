@@ -70,7 +70,7 @@ public class UserAPI {
     @PostMapping("/verify")
     public String verify(@RequestBody LoginDTO loginDTO) {
         UserEntity userEntity = userRepository.findByUsername(loginDTO.getUsername());
-        if (userEntity.isEnabled()) {
+            if (userEntity.isEnabled()) {
             return "Account had verified";
         } else {
             String token = UUID.randomUUID().toString();

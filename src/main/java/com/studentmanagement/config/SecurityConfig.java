@@ -38,12 +38,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                                .requestMatchers("/signup").permitAll()
-                                .requestMatchers("/signup/**").permitAll()
+                                .requestMatchers("/signup","/signup/**","/verify","/profile").permitAll()
+                                .requestMatchers("/swagger-ui/**").permitAll()
                                 .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
-//                                .requestMatchers("/admin/**").permitAll()
-                                .requestMatchers("/verify").permitAll()
-                                .requestMatchers("/profile").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/student").hasAnyAuthority("ADMIN", "MANAGER")
                                 .requestMatchers(HttpMethod.GET, "/api/student/**").hasAnyAuthority("ADMIN", "MANAGER")
                                 .requestMatchers(HttpMethod.GET, "/api/student/search/**").hasAnyAuthority("ADMIN", "MANAGER")
@@ -54,7 +51,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.DELETE, "/api/student").hasAnyAuthority("ADMIN")
                                 .requestMatchers(HttpMethod.POST, "/user/**").hasAnyAuthority("MANAGER", "ADMIN")
                                 .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                                .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll)
                 .csrf(AbstractHttpConfigurer::disable)

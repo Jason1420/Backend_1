@@ -107,8 +107,7 @@ public class AccountServiceImpl implements AccountService {
                 newEntity
         );
 
-        confirmationTokenService.saveConfirmationToken(
-                confirmationToken);
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
         String link = "http://localhost:8080/signup/confirm?token=" + token;
         emailSender.send(
                 dto.getEmail(),
